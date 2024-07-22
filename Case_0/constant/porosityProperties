@@ -1,0 +1,40 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      porosityProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+porosity1
+{
+    type        DarcyForchheimer;
+    active      true;
+    cellZone    porousRegion1; // Nombre de la zona de celdas para el primer medio poroso
+    DarcyForchheimerCoeffs
+    {
+        d       (1e-7 1e-7 1e-7); // Coeficientes de Darcy
+        f       (0.5 0.5 0.5);    // Coeficientes de Forchheimer
+    }
+}
+
+porosity2
+{
+    type        DarcyForchheimer;
+    active      true;
+    cellZone    porousRegion2; // Nombre de la zona de celdas para el segundo medio poroso
+    DarcyForchheimerCoeffs
+    {
+        d       (2e-7 2e-7 2e-7); // Coeficientes de Darcy
+        f       (1 1 1);          // Coeficientes de Forchheimer
+    }
+}
+
+// ************************************************************************* //

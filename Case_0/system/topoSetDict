@@ -1,0 +1,48 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+//Dimensions of the flume and free surface
+l 6;
+wt  0.01;
+
+//distance porous media
+a $aa;
+l1 #eval{4.1+$a};
+l2 #eval{$l1+0.1};
+actions
+(
+    {
+        name    porousRegion1;
+        type    cellZoneSet;
+        action  new;
+        source  boxToCell;
+        sourceInfo
+        {
+            box (4 0 0) (4.1 0.35 $wt) // Define las coordenadas de la región porosa 1
+        }
+    }
+    {
+        name    porousRegion2;
+        type    cellZoneSet;
+        action  new;
+        source  boxToCell;
+        sourceInfo
+        {
+            box ($l1 0 0) ($l2 0.35 $wt) // Define las coordenadas de la región porosa 2
+        }
+    }
+);
+
+// ************************************************************************* //

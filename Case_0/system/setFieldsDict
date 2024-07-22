@@ -1,0 +1,63 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2306                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// Dimensions of the flume and free surface
+l 6;
+h 0.3;
+wt 0.01;
+H 0.06;
+
+// distance porous media
+a $aa;
+l1 #eval{4.1+$a};
+l2 #eval{$l1+0.1};
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.water 0
+    volScalarFieldValue porosity 1
+);
+
+regions
+(
+    boxToCell
+    {
+        box (0 0 0) ($l $h $wt);
+
+        fieldValues
+        (
+            volScalarFieldValue alpha.water 1
+        );
+    }
+    boxToCell
+    {
+        box (4 0 0) (4.1 0.35 $wt);
+
+        fieldValues
+        (
+            volScalarFieldValue porosity 0.25
+        );
+    }
+    boxToCell
+    {
+        box ($l1 0 0) ($l2 0.35 $wt);
+
+        fieldValues
+        (
+            volScalarFieldValue porosity 0.5
+        );
+    }
+);
+// ************************************************************************* //
