@@ -13,28 +13,41 @@ FoamFile
     object      porosityProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-porosity1
+n1 0.5;
+T1 0.7;
+um1 0.78 ;
+d1 0.0159;
+KC1 #eval{($T1 * $um1)/($d1 * $n1)};
+
+n2 0.5;
+T2 0.65;
+um2 0.85 ;
+d2 0.0123;
+KC2 #eval{($T2 * $um2)/($d2 * $n2)};
+
+// Medio poroso 1
+porosityModel1 JensenEtAl2014;
+porosityEnabled1 true;
+
+JensenEtAl2014Coeffs1
 {
-    type        DarcyForchheimer;
-    active      true;
-    cellZone    porousRegion1; // Nombre de la zona de celdas para el primer medio poroso
-    DarcyForchheimerCoeffs
-    {
-        d       (1e-7 1e-7 1e-7); // Coeficientes de Darcy
-        f       (0.5 0.5 0.5);    // Coeficientes de Forchheimer
-    }
+    alpha 500;
+    beta 2;
+    gamma_p 0.34;
+    d50 0.0159;
+    KC $KC1; 
 }
 
-porosity2
-{
-    type        DarcyForchheimer;
-    active      true;
-    cellZone    porousRegion2; // Nombre de la zona de celdas para el segundo medio poroso
-    DarcyForchheimerCoeffs
-    {
-        d       (2e-7 2e-7 2e-7); // Coeficientes de Darcy
-        f       (1 1 1);          // Coeficientes de Forchheimer
-    }
-}
+// Medio poroso 2
+porosityModel2 JensenEtAl2014;
+porosityEnabled2 true;
 
+JensenEtAl2014Coeffs2
+{
+    alpha 450;
+    beta 1.8;
+    gamma_p 0.3;
+    d50 0.0123;
+    KC $KC2; 
+}
 // ************************************************************************* //
